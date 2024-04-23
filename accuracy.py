@@ -2,13 +2,10 @@ from openpyxl import Workbook
 import pandas as pd 
 
 
-class accuracy():
-    def bid_results(self):
-        """
-        This function will allow the user to
-        automatically inster the copied text from planet bids
-        in order to stratify it.
-        """
+class PlanetBids():
+
+    # Function 1.1
+    def BidResults(self):
         bidders_raw = []
         with open(self,"r") as file:
             lines = file.readlines()
@@ -17,13 +14,10 @@ class accuracy():
             bidders_raw.append(lines[bidder_info:bidder_info+5])
         
         return bidders_raw
-    
-    def stratification(self):
-        """
-        This functions prepares each attribute of the
-        bidder in order to place it within an 
-        excel file for a better visualization.
-        """
+
+
+    # Function 1.2
+    def Stratification(self):
         bidders = []
         for bidder_id in self:
             bidder = {}
@@ -39,9 +33,8 @@ class accuracy():
         return bidders
 
     
-
-
-    def excel_allocation(self,bidders):
+    # Function 1.3 Climax
+    def ExcelAllocation(self,bidders):
         """
         This function allocates the "clean" data points
         from the function above into an excel file."
@@ -54,26 +47,40 @@ class accuracy():
                 df_individual.to_excel(writer,index=False,sheet_name=f"Bidder{i}")
 
 
-    def bidder_subcontractors(self):
-        """
-        This function reads and stratifies subcontracor's
-        information from each bidder.
-        """
+    
+    #  Function 2.1
+    def BidderSubs(self):
         with open(self,"r") as file:
             read = file.read()
 
         bidders_subs = read.split("\n\n\n")
         return bidders_subs
 
-    def subs_allocation(self):
+
+    
+
+    # Function 2.2
+    def SubsAllocation(self,bidders):
         """
         This function allocates the clean subcontractor information
         into an excel file for visualization.
         """
-        for i, y in enumerate(self):
-            print(f"Bidder #{i+1}:")
-            print(y)
-            #print("-----------------------------------------")
+        bidders_subs = []
+        for bidder_num, copied in enumerate(self):
+            print(f"Bidder #{bidder_num+1}: {bidders[bidder_num]['name']}")
+            breakdown = copied.split("Zip")
+            for i in breakdown:
+                print(i)
+                print("-----------------------------------------")
+                print("-----------------------------------------")
+                print("-----------------------------------------")
+            print("-----------------------------------------")
+            print("-----------------------------------------")
+            print("-----------------------------------------")
+            print("-----------------------------------------")
+            print("-----------------------------------------")
+            print("-----------------------------------------")
+
 
     def bidder_line_items(self):
         """
@@ -87,68 +94,29 @@ class accuracy():
 
 
 if __name__ == "__main__":
-    bid_results_raw_text = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBidResults.txt" #insert corresponding file
-    bid_results_spreadsheet = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBidResults.xlsx" #insert corresponding text file
-    bidders_subcontractors = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBiddersSubs.txt" #insert corresponding text file
-    bidders_line_items = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBiddersLineItems.txt" #insert corresponding text file
-    accuracy.excel_allocation(bid_results_spreadsheet, accuracy.stratification(accuracy.bid_results(bid_results_raw_text)))
-    accuracy.subs_allocation(accuracy.bidder_subcontractors(bidders_subcontractors))
+    # Insert corresponding file
+    bid_results_raw_text = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBidResults.txt" 
 
+    # Insert corresponding file
+    bid_results_spreadsheet = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBidResults.xlsx"
 
+    # Insert corresponding file
+    bidders_subcontractors = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBiddersSubs.txt"
 
+    # Insert corresponding file
+    bidders_line_items = "/Users/damiamalfaro/Desktop/Accuracy/Estimate/DataBase/OliveGrovePark/OliveGroveBiddersLineItems.txt"
+    
+    """
+    Planet Bids
+    """
+    # Function 1.2 will be used multiple times, thereby its own variable.
+    Bidders = PlanetBids.Stratification(PlanetBids.BidResults(bid_results_raw_text))
 
+    # Function 1 Allocates bidder summary results in Excel
+    PlanetBids.ExcelAllocation(bid_results_spreadsheet, Bidders)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # Function 2 Allocates bidder's subcontractors information in Excel below each bidder information.
+    PlanetBids.SubsAllocation(PlanetBids.BidderSubs(bidders_subcontractors),Bidders)
 
 
 

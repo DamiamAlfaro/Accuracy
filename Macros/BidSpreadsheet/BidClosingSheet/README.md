@@ -1,6 +1,6 @@
-## Macro Usage
+# Macro Usage
 
-# Order (Preferable)
+## Order (Preferable)
 
 1. CreatingNewTraitSheet
   - This macro will create a new TraitSheet at the end of your workbook.

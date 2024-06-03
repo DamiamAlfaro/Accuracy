@@ -1,4 +1,4 @@
-Sub CopySheets()
+Sub CreatingNewSheet()
     Dim ws1 As Worksheet
     Dim ws2 As Worksheet
     Dim newSheet1 As Worksheet

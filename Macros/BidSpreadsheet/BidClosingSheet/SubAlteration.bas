@@ -5,7 +5,7 @@ Sub ModifyRowBasedOnInput()
     Dim inputRow As String
     Dim inputPerc As String
 
-    Set ws = ThisWorkbook.Sheets("Bid Closing") ' Change "Sheet1" to your sheet name
+    Set ws = ThisWorkbook.Sheets("Bid Closing")
 
     ' Prompt user for the row number
     inputRow = InputBox("Enter the row number:", "Row Input")

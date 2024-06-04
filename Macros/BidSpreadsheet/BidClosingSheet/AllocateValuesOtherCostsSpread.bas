@@ -6,22 +6,26 @@ Sub AllocateAndSumValuesWithSplit()
     Dim lookupValues As Variant
     Dim lookupValue As Variant
     Dim foundCell As Range
-    Dim dict As Object
+    Dim dict: Set dict = CreateObject("Scripting.Dictionary")
     Dim valueSplit As Double
     Dim i As Integer
 
     ' Set references to the sheets
     Set wsBidClosing = ThisWorkbook.Sheets("Bid Closing")
     Set wsOtherCostsSpread = ThisWorkbook.Sheets("OtherCostsSpread")
-    
-    ' Create a dictionary to store sums
-    Set dict = CreateObject("Scripting.Dictionary")
-    
+
     ' Loop through J36:J72 in the "Bid Closing" sheet
     For Each cell In wsBidClosing.Range("J36:J72")
         If IsNumeric(cell.Value) Or InStr(cell.Value, ";") > 0 Then
             lookupValues = Split(cell.Value, ";")
-            valueSplit = wsBidClosing.Cells(cell.Row, "D").Value / (UBound(lookupValues) + 1)
+            
+            ' Check if the value in column D is numeric and not empty
+            If IsNumeric(wsBidClosing.Cells(cell.Row, "D").Value) And wsBidClosing.Cells(cell.Row, "D").Value <> "" Then
+                valueSplit = wsBidClosing.Cells(cell.Row, "D").Value / (UBound(lookupValues) + 1)
+            Else
+                valueSplit = 0
+            End If
+            
             For i = LBound(lookupValues) To UBound(lookupValues)
                 lookupValue = Trim(lookupValues(i))
                 If Not dict.exists(lookupValue) Then
@@ -32,7 +36,7 @@ Sub AllocateAndSumValuesWithSplit()
             Next i
         End If
     Next cell
-    
+
     ' Allocate the summed values to the "OtherCostsSpread" sheet in the J column
     For Each lookupValue In dict.keys
         Set foundCell = wsOtherCostsSpread.Range("A2:A31").Find(lookupValue, LookIn:=xlValues, LookAt:=xlWhole)
@@ -45,4 +49,3 @@ Sub AllocateAndSumValuesWithSplit()
     MsgBox "Values summed and allocated to column J successfully."
 
 End Sub
-

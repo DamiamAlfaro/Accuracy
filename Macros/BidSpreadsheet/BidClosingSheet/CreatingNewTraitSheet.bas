@@ -37,4 +37,23 @@ Sub CreatingNewSheet()
         Exit Sub
     End If
     On Error GoTo 0
+
+    ' Update formulas in the new sheets to refer to the new sheets instead of the old ones
+    Call UpdateFormulas(newSheet1, ws1.Name, newName1, ws2.Name, newName2)
+    Call UpdateFormulas(newSheet2, ws1.Name, newName1, ws2.Name, newName2)
 End Sub
+
+Sub UpdateFormulas(sheet As Worksheet, oldSheetName1 As String, newSheetName1 As String, oldSheetName2 As String, newSheetName2 As String)
+    Dim cell As Range
+    Dim formula As String
+
+    For Each cell In sheet.UsedRange
+        If cell.HasFormula Then
+            formula = cell.formula
+            formula = Replace(formula, "'" & oldSheetName1 & "'!", "'" & newSheetName1 & "'!")
+            formula = Replace(formula, "'" & oldSheetName2 & "'!", "'" & newSheetName2 & "'!")
+            cell.formula = formula
+        End If
+    Next cell
+End Sub
+

@@ -1,3 +1,4 @@
+' ctrl+shift+H
 Sub AddHyperlinkAndData()
     Dim ws As Worksheet
     Dim targetSheet As Worksheet

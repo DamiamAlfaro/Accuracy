@@ -1,3 +1,4 @@
+' ctrl+shift+T
 Sub FixingTabName()
 '
 ' FixingTabName Macro

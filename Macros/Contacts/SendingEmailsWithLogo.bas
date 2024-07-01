@@ -7,7 +7,7 @@ Sub SendEmails()
     Dim TemplatePath As String
 
     ' Path to your Outlook template file (.oft)
-    TemplatePath = Environ("USERPROFILE") & "\Desktop\Bilbro Construction - Speicher Park Improvements.oft"
+    TemplatePath = Environ("USERPROFILE") & "\Desktop\file.oft"
     
     ' Set the worksheet
     Set ws = ThisWorkbook.Sheets("Sheet1") ' Change "Sheet1" to your sheet name
